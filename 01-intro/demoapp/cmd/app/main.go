@@ -1,8 +1,9 @@
 package main
 
 import (
-	"go-core-4/01-intro/demoapp/pkg/stringutils"
 	"net/http"
+
+	"go-core-4/01-intro/demoapp/pkg/stringutils"
 )
 
 func main() {
