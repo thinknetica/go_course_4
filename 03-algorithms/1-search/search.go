@@ -1,5 +1,7 @@
 package bsearch
 
+import "fmt"
+
 // Simple возвращает номер элемента в массиве или -1. Используется простой поиск.
 func Simple(data []int, item int) int {
 	for i := range data {
@@ -25,4 +27,25 @@ func Binary(data []int, item int) int {
 		}
 	}
 	return -1
+}
+
+func O() {
+	slice := []int{1, 2, 3}
+
+	// O(1)
+	fmt.Println(len(slice))
+
+	// O(N)
+	for i := range slice {
+		// ....
+
+		// O(N^2)
+		for j := range slice {
+
+			// O(N^3)
+			for k := range slice {
+				_, _, _ = i, j, k
+			}
+		}
+	}
 }
