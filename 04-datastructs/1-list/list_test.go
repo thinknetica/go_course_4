@@ -4,11 +4,6 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
-	l := New()
-	t.Logf("%+v", l)
-}
-
 func TestList_Push(t *testing.T) {
 	l := New()
 	l.Push(Elem{Val: 2})
