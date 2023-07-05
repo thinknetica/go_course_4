@@ -1,0 +1,83 @@
+package main
+
+import (
+	"log"
+	"net"
+	"strings"
+	"time"
+)
+
+// Сетевой адрес.
+//
+// Служба будет слушать запросы на всех IP-адресах
+// компьютера на порту 12345.
+// Нпример, 127.0.0.1:12345
+const addr = "0.0.0.0:12345"
+
+// Протокол сетевой службы.
+const proto = "tcp4"
+
+func main() {
+	// Запуск сетевой службы про протоколу TCP
+	// на порту 12345.
+	listener, err := net.Listen(proto, addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Подключения обрабатываются в бесконечном цикле.
+	// Иначе после обслуживания первого подключения сервер
+	// завершит работу.
+	for {
+		// Принимаем подключение.
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Fatal(err)
+		}
+		// Вызов обработчика подключения.
+		handleConn(conn)
+	}
+}
+
+// Обработчик. Вызывается для каждого соединения.
+func handleConn(conn net.Conn) {
+
+	// Чтение сообщения от клиента.
+	var req []byte
+	var buf = make([]byte, 2)
+	for {
+		_, err := conn.Read(buf)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		end := false
+		for _, b := range buf {
+			if b == '\n' {
+				end = true
+				break
+			}
+			req = append(req, b)
+		}
+		if end {
+			break
+		}
+	}
+
+	// Удаление символов конца строки.
+	msg := strings.TrimSuffix(string(req), "\n")
+	msg = strings.TrimSuffix(msg, "\r")
+
+	// Если получили "time" - пишем время в соединение.
+	if msg == "time" {
+		n, err := conn.Write([]byte(time.Now().String() + "\n"))
+		if err != nil {
+			log.Printf("ошибка: %v", err)
+			return
+		}
+		log.Printf("клиенту отправлено %d байт", n)
+	}
+
+	// Закрытие соединения.
+	conn.Close()
+}
