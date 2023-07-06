@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 )
@@ -10,16 +9,21 @@ import (
 func main() {
 	f, err := os.Create("./file.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
-	err = ioutil.WriteFile(f.Name(), []byte("Текст"), 0666)
+	defer f.Close()
+
+	err = os.WriteFile(f.Name(), []byte("Текст"), 0666)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 
-	data, err := ioutil.ReadFile(f.Name())
+	data, err := os.ReadFile(f.Name())
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 	fmt.Printf("Данные файла:\n%s\n", data)
 
@@ -27,7 +31,8 @@ func main() {
 	var file *os.File
 	file, err = os.Open(f.Name())
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 	defer file.Close()
 
@@ -35,7 +40,8 @@ func main() {
 	buf := make([]byte, 6)
 	n, err := file.Read(buf)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 	buf = buf[:n]
 	fmt.Printf("Данные файла:\n%s\n", buf)
