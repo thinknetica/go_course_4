@@ -22,6 +22,15 @@ type Rates struct {
 }
 
 func rublesToUSD(rubles float64) (float64, error) {
+	ratio, err := data()
+	if err != nil {
+		return 0, err
+	}
+
+	return calc(rubles, ratio), nil
+}
+
+func data() (float64, error) {
 	var data Rates
 	const url = "https://www.cbr-xml-daily.ru/daily_json.js"
 	resp, err := http.Get(url)
@@ -37,5 +46,10 @@ func rublesToUSD(rubles float64) (float64, error) {
 	if data.Valute.USD.Value == 0 {
 		return 0, errors.New("деление на 0")
 	}
-	return rubles / float64(data.Valute.USD.Value), nil
+
+	return data.Valute.USD.Value, nil
+}
+
+func calc(rubles float64, ratio float64) float64 {
+	return rubles / ratio
 }

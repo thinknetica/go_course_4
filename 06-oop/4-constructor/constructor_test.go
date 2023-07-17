@@ -12,3 +12,9 @@ func TestNew(t *testing.T) {
 		t.Errorf("получили %s, ожидалось %s", got, want)
 	}
 }
+
+func TestGuitar(t *testing.T) {
+	var g Guitar
+	g.Tabs = make(map[string]string)
+	g.Tabs["Metallica"] = "One"
+}

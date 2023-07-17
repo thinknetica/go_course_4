@@ -3,6 +3,7 @@ package testmain
 import (
 	"context"
 	"log"
+	"os"
 	"reflect"
 	"testing"
 
@@ -15,10 +16,13 @@ func TestMain(m *testing.M) {
 	conn, err := pgx.Connect(context.Background(), "postgres://user:pwd@server/database")
 	if err != nil {
 		log.Println(err)
+		os.Exit(1)
 	}
+
 	testService = &Service{
 		db: conn,
 	}
+
 	m.Run()
 	// Здесь может идти освобождение ресурсов.
 }

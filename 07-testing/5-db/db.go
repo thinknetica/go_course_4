@@ -6,21 +6,6 @@ type Product struct {
 }
 
 func Products() ([]Product, error) {
-
-	i := 4
-	_ = i
-
-	s := "ABC"
-	_ = s
-
-	p := Product{
-		Name: "A",
-	}
-	_ = p
-
-	var m map[string]bool = map[string]bool{"s": true}
-	_ = m
-
 	data := []Product{
 		{
 			Name:  "Пепелац",

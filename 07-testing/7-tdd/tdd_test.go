@@ -16,6 +16,16 @@ func TestFact(t *testing.T) {
 			args: args{n: 1},
 			want: 1,
 		},
+		{
+			name: "Test #2",
+			args: args{n: 3},
+			want: 6,
+		},
+		{
+			name: "Test #2",
+			args: args{n: 0},
+			want: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

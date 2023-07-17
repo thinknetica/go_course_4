@@ -70,8 +70,6 @@ func sampleData() []int {
 
 func BenchmarkBinary(b *testing.B) {
 	data := sampleData()
-	b.ResetTimer()
-
 	for i := 0; i < b.N; i++ {
 		n := rand.Intn(1000)
 		res := Binary(data, n)
@@ -81,8 +79,6 @@ func BenchmarkBinary(b *testing.B) {
 
 func BenchmarkSimple(b *testing.B) {
 	data := sampleData()
-	b.ResetTimer()
-
 	for i := 0; i < b.N; i++ {
 		n := rand.Intn(1000)
 		res := Simple(data, n)

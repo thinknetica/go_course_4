@@ -10,7 +10,7 @@ type Course struct {
 }
 
 // SetAuthor устанавливает имя автора.
-func (c Course) SetAuthor(name string) {
+func (c *Course) SetAuthor(name string) {
 	c.author = name
 }
 

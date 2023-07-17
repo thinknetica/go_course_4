@@ -15,7 +15,7 @@ type processor struct {
 }
 
 func (c *computer) cpuinfo() string {
-	return fmt.Sprintf("computer cpuinfo()")
+	return "computer cpuinfo()"
 }
 
 func (p *processor) cpuinfo() string {

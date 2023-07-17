@@ -1,5 +1,9 @@
 package tdd
 
 func Fact(n int) int {
-	return 1
+	if n < 1 {
+		return 1
+	}
+
+	return n * Fact(n-1)
 }

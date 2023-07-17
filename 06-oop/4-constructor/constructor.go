@@ -9,7 +9,7 @@ type Guitar struct {
 	manufacturer string
 	model        string
 
-	ch chan int
+	Tabs map[string]string
 }
 
 // New - конструктор.
@@ -18,7 +18,7 @@ func New(manufacturer, model string) *Guitar {
 		manufacturer: manufacturer, // имена совпадают
 		model:        model,        // но это не проблема
 	}
-	g.ch = make(chan int)
+	g.Tabs = make(map[string]string)
 
 	return &g // явно указываем, что возвращается ссылка
 }

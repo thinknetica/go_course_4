@@ -45,6 +45,15 @@ func main() {
 	}
 }
 
+type Server struct {
+	log Logger
+}
+
+func New(log Logger) *Server {
+	s := &Server{log: log}
+	return s
+}
+
 // logMsg записывает сообщение в журнал
 func logMsg(l Logger, msg string) error {
 	// CODE
