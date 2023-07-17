@@ -24,6 +24,7 @@ var a int
 func main() {
 	a = 10
 	_ = a
+	go double(a)
 
 	res := twoSum([]int{2, 7, 11, 15}, 13)
 	if !reflect.DeepEqual(res, [2]int{0, 2}) {
@@ -50,4 +51,9 @@ func twoSum(nums []int, target int) [2]int {
 	}
 
 	return [2]int{-1, -1}
+}
+
+func double(a int) int {
+	b := a * a
+	return b
 }

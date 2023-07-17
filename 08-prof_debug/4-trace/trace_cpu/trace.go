@@ -16,13 +16,14 @@ func main() {
 	}
 	// запуск трассировки и отложенное завершение
 	trace.Start(f)
-	defer trace.Stop()
 	defer f.Close()
+	defer trace.Stop()
 
 	go compute1()
 	go compute1()
 	go compute2()
 	go compute2()
+
 	time.Sleep(time.Second * 1)
 }
 

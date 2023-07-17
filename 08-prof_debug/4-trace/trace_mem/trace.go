@@ -17,6 +17,7 @@ func main() {
 
 	// запуск трассировки и отложенное завершение
 	trace.Start(f)
+	defer f.Close()
 	defer trace.Stop()
 
 	nums := fillSlice()
