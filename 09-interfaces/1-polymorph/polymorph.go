@@ -2,6 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"encoding/xml"
+	"io"
+	"log"
+	"os"
 )
 
 // serializer - абстрактный интерфейсный тип даных.
@@ -25,21 +29,65 @@ func (p *person) serialize() ([]byte, error) {
 	return b, nil
 }
 
+//
+// Другой тип, выполняющий контракт интерфейса.
+//
+
+type car struct {
+	Modle string
+	Year  int
+}
+
+func (c *car) serialize() ([]byte, error) {
+	b, err := xml.Marshal(c)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
+
 // Полиморфическая функция, принимающая интерфейс.
-func str(s serializer) string {
+func store(s serializer, w io.Writer) error {
 	b, err := s.serialize()
 	if err != nil {
-		return ""
+		return err
 	}
-	return string(b)
+
+	_, err = w.Write(b)
+	return err
 }
 
 func main() {
-	p := &person{
+	p := person{
 		Name: "Курт",
 		Age:  27,
 	}
-	var s serializer
-	s = p
-	print(str(s))
+	var s serializer = &p
+
+	f, err := os.Create("./output.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = store(s, f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = store(&p, f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// *************************************************** //
+
+	c := car{
+		Modle: "Beetle",
+		Year:  1970,
+	}
+
+	err = store(&c, os.Stdout)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

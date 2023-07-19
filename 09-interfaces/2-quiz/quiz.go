@@ -4,14 +4,13 @@ import (
 	"fmt"
 )
 
-type myMap map[int]int
-
 func main() {
-	var iface interface{} // 0
-	var f func()          // 1
-	var m myMap = nil     // 2
-
-	cycle(iface, f, m)
+	var iface any        // 0
+	var f func()         // 1
+	var m map[string]int // 2
+	var p *int = nil
+	var iface2 interface{} = p // 3
+	cycle(iface, f, m, iface2)
 }
 
 func cycle(ifaces ...interface{}) {

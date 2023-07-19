@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ordered interface {
 	int | float64 | float32 | byte | string
