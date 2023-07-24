@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+
+	"golang.org/x/exp/slices"
 )
 
 type ordered interface {
-	int | float64 | float32 | byte | string
+	int | int64 | float64 | float32 | byte | string
 }
 
 // min - обобщённая функция, возврающая минимальный элемент в массиве.
@@ -39,4 +41,8 @@ func main() {
 	if val, ok := min(strings); ok {
 		fmt.Printf("%v\n", val)
 	}
+
+	var slice = []int{1, 2, 3}
+	fmt.Println(slices.Contains(slice, 2))
+	fmt.Println(slices.Contains(slice, 20))
 }

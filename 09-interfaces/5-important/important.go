@@ -1,6 +1,7 @@
 package important
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -10,7 +11,7 @@ type E struct {
 }
 
 func (e *E) Error() string {
-	return e.msg
+	return e.msg + fmt.Sprintf(": %v", e.code)
 }
 
 // builtin

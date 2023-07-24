@@ -35,22 +35,23 @@ func main() {
 	var c cassete
 
 	m = c
-	// m.label = "Ace Of Base" - ошибка
+
+	//m.label = "Ace Of Base" - ошибка
 	m.isModern()
 
 	switch c1 := m.(type) {
 	case cassete:
-		c1.label = ""
+		c1.label = "Ace Of Base"
 	case old:
 		c1.isOld()
 	}
 
-	if c1, ok := m.(cassete); ok {
-		c1.label = "Ace Of Base"
-		log.Printf("%+v", c1)
+	if casseteInstance, ok := m.(cassete); ok {
+		casseteInstance.label = "Ace Of Base"
+		log.Printf("%+v", casseteInstance)
 	}
 
-	if c2, ok := m.(old); ok {
-		fmt.Println("Old: ", c2.isOld(), "\tObsolete: ", c2.isObsolete())
+	if oldInstance, ok := m.(old); ok {
+		fmt.Println("Old: ", oldInstance.isOld(), "\tObsolete: ", oldInstance.isObsolete())
 	}
 }

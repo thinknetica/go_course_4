@@ -5,8 +5,8 @@ import (
 )
 
 func main() {
-	arr := []interface{}{10, "String", true}
-	for _, v := range arr {
+	slice := []any{10, "String", true}
+	for _, v := range slice {
 		switch v.(type) {
 		case int:
 			fmt.Println("Число:", v)

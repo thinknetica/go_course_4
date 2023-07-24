@@ -6,6 +6,7 @@ require (
 	github.com/DmitriyVTitov/size v1.5.0
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/rs/zerolog v1.29.1
+	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
 	golang.org/x/net v0.11.0
 )
 

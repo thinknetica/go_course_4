@@ -34,7 +34,7 @@ func (p *person) serialize() ([]byte, error) {
 //
 
 type car struct {
-	Modle string
+	Model string
 	Year  int
 }
 
@@ -48,6 +48,10 @@ func (c *car) serialize() ([]byte, error) {
 
 // Полиморфическая функция, принимающая интерфейс.
 func store(s serializer, w io.Writer) error {
+	if wc2, ok := w.(io.WriteCloser); ok {
+		defer wc2.Close()
+	}
+
 	b, err := s.serialize()
 	if err != nil {
 		return err
@@ -82,7 +86,7 @@ func main() {
 	// *************************************************** //
 
 	c := car{
-		Modle: "Beetle",
+		Model: "Beetle",
 		Year:  1970,
 	}
 
