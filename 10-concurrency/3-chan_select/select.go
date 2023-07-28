@@ -33,6 +33,7 @@ OUT:
 		case val := <-ch2:
 			fmt.Println(val)
 		default:
+			continue
 		}
 	}
 }

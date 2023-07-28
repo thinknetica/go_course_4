@@ -36,8 +36,7 @@ func proc2(in <-chan int) <-chan int {
 }
 
 func main() {
-	src := gen(1, 2, 3, 4, 5)
-	res := proc(proc2(proc(proc(src))))
+	res := proc(proc2(proc2(proc(gen(1, 2, 3, 4, 5)))))
 
 	for val := range res {
 		fmt.Println(val)

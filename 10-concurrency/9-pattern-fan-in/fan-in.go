@@ -14,12 +14,13 @@ func worker(n int) chan int {
 	return ch
 }
 
-func fanIn(channels []<-chan int) <-chan int {
-	ch := make(chan int)
+func fanIn[T any](channels ...<-chan T) <-chan T {
+	ch := make(chan T)
 	var wg sync.WaitGroup
 	wg.Add(len(channels))
+
 	for _, c := range channels {
-		go func(in <-chan int) {
+		go func(in <-chan T) {
 			defer wg.Done()
 			for i := range in {
 				ch <- i
@@ -41,7 +42,7 @@ func main() {
 		chans = append(chans, worker(i))
 	}
 
-	ch := fanIn(chans)
+	ch := fanIn(chans...)
 	for val := range ch {
 		fmt.Println(val)
 	}

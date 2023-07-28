@@ -11,10 +11,12 @@ func printN(n int, wg *sync.WaitGroup) {
 }
 
 func step1(ch chan<- string) {
+	// ...
 	ch <- "message from Step 1"
 }
 func step2(ch <-chan string) {
 	fmt.Println(<-ch)
+	// ....
 }
 
 func main() {

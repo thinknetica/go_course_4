@@ -16,13 +16,13 @@ func main() {
 		close(ch)
 	}()
 
-	/*for {
+	for {
 		val, ok := <-ch
 		fmt.Println(val, ok)
 		if !ok {
 			break
 		}
-	}*/
+	}
 
 	for val := range ch {
 		fmt.Println(val)

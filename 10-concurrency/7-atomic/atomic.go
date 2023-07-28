@@ -7,17 +7,19 @@ import (
 )
 
 func main() {
-	var c uint64
+	var c atomic.Int64
+
 	N := 100_000
+
 	var wg sync.WaitGroup
 	wg.Add(N)
 	for i := 0; i < N; i++ {
 		go func() {
-			//c++
-			atomic.AddUint64(&c, 1)
+			c.Add(1)
 			wg.Done()
 		}()
 	}
 	wg.Wait()
-	fmt.Println("Счётчик:", c)
+
+	fmt.Println("Счётчик:", c.Load())
 }

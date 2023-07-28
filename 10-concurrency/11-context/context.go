@@ -24,9 +24,10 @@ func worker(ctx context.Context, in <-chan string, out chan<- string) {
 func main() {
 	data := make(chan string)
 	result := make(chan string)
-	ctx, cancel := context.WithTimeout(context.Background(), 1200*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 700*time.Millisecond)
 	ctx = context.WithValue(ctx, "key", "val")
 	defer cancel()
+
 	go worker(ctx, data, result)
 
 	go func() {

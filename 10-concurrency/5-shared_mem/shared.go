@@ -5,27 +5,29 @@ import (
 	"sync"
 )
 
-// add прибавляет x к sum
-func add(sum *int, wg *sync.WaitGroup, mu *sync.Mutex) {
+// Критическая секция.
+var mu sync.Mutex
+var counter int
+
+// inc прибавляет x к sum
+func inc(wg *sync.WaitGroup) {
 	defer wg.Done()
-	for i := 1; i <= 10_000; i++ {
+
+	for i := 0; i < 10_000; i++ {
 		mu.Lock()
-		*sum++
+		counter++
 		mu.Unlock()
 	}
 }
 
 func main() {
-	sum := 0
-	var mu sync.Mutex
-
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	go add(&sum, &wg, &mu)
-	go add(&sum, &wg, &mu)
+	go inc(&wg)
+	go inc(&wg)
 
 	wg.Wait()
 
-	fmt.Println(sum) // Что будет на экране?
+	fmt.Println(counter) // Что будет на экране?
 }
