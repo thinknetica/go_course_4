@@ -4,6 +4,9 @@ go 1.19
 
 require (
 	github.com/DmitriyVTitov/size v1.5.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gorilla/mux v1.8.0
+	github.com/gorilla/sessions v1.2.1
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/rs/zerolog v1.29.1
 	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
@@ -11,6 +14,7 @@ require (
 )
 
 require (
+	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.14.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
