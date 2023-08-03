@@ -15,16 +15,23 @@ type API struct {
 }
 
 // New создаёт объект API.
-func New(r *mux.Router) *API {
+func New() *API {
 	api := API{
-		router: r,
+		router: mux.NewRouter(),
 		store:  sessions.NewCookieStore([]byte("secret_password")),
 	}
+
+	api.endpoints()
+
 	return &api
 }
 
-// Endpoints регистрирует конечные точки API.
-func (api *API) Endpoints() {
+func (api *API) Router() *mux.Router {
+	return api.router
+}
+
+// endpoints регистрирует конечные точки API.
+func (api *API) endpoints() {
 	api.router.Use(requestIDMiddleware)
 	api.router.Use(logMiddleware)
 	api.router.Use(api.jwtMiddleware)

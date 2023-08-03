@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gorilla/mux"
@@ -51,6 +52,8 @@ func Test_mainHandler(t *testing.T) {
 	if rr.Code != http.StatusOK {
 		t.Errorf("код неверен: получили %d, а хотели %d", rr.Code, http.StatusOK)
 	}
-
-	t.Log("Response: ", rr.Body)
+	body := rr.Body.String()
+	if !strings.Contains(body, "Name") {
+		t.Fatal(body)
+	}
 }
