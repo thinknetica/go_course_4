@@ -6,12 +6,15 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/rs/zerolog"
 )
 
 // API предоставляет интерфейс программного взаимодействия.
 type API struct {
 	router *mux.Router
 	store  *sessions.CookieStore
+
+	log *zerolog.Logger
 }
 
 // New создаёт объект API.

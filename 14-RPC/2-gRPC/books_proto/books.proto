@@ -1,0 +1,23 @@
+syntax = "proto3";
+package protobuf;
+
+option go_package = "./books_proto";
+
+// Книга.
+message Book {
+    int64 id = 1;
+    string title = 2;
+    string author_name = 3;
+}
+
+message Empty {}
+
+// Из каталога 2-gRPC:
+// PB: "protoc -I . --go_out=. ./books_proto/books.proto"
+// gRPC: "protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative .\books_proto\books.proto"
+
+// Описание службы gRPC.
+service Bookinist {
+  rpc Books (Empty) returns (stream Book) {}
+  rpc AddBook (Book) returns (Empty) {}
+}

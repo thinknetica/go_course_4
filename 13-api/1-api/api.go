@@ -15,6 +15,8 @@ type API struct {
 // Endpoints регистрирует конечные точки API.
 func (api *API) Endpoints() {
 	api.router.Use(logMiddleware)
+	api.router.Use(headersMiddleware)
+
 	api.router.HandleFunc("/api/v1/books", api.books).Methods(http.MethodGet)
 	api.router.HandleFunc("/api/v1/books", api.newBook).Methods(http.MethodPost)
 	api.router.HandleFunc("/api/v1/books/{id}", api.deleteBook).Methods(http.MethodDelete)
