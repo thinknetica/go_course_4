@@ -13,7 +13,8 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:12345", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:12345",
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -21,20 +22,22 @@ func main() {
 
 	client := pb.NewBookinistClient(conn)
 
-	err = printAllBooksOnserver(client)
+	ctx := context.Background()
+
+	err = printAllBooksOnserver(ctx, client)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	client.AddBook(context.Background(), &pb.Book{Id: 3, Title: "The Lord Of The Rings"})
 
-	err = printAllBooksOnserver(client)
+	err = printAllBooksOnserver(ctx, client)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func printAllBooksOnserver(client pb.BookinistClient) error {
+func printAllBooksOnserver(ctx context.Context, client pb.BookinistClient) error {
 	fmt.Println("\nЗапрашиваю книги на gRPC-сервере.")
 	stream, err := client.Books(context.Background(), &pb.Empty{})
 	if err != nil {
@@ -42,14 +45,18 @@ func printAllBooksOnserver(client pb.BookinistClient) error {
 	}
 
 	for {
-		book, err := stream.Recv()
-		if err == io.EOF {
-			break
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+			book, err := stream.Recv()
+			if err == io.EOF {
+				return nil
+			}
+			if err != nil {
+				return err
+			}
+			fmt.Printf("Получена книга: %v\n", book)
 		}
-		if err != nil {
-			return err
-		}
-		fmt.Printf("Получена книга: %v\n", book)
 	}
-	return nil
 }

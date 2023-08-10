@@ -13,7 +13,7 @@ import (
 type Bookinist struct {
 	Data []pb.Book
 
-	// Композиция интерфейса.
+	// Композиция типов.
 	pb.UnimplementedBookinistServer
 }
 
@@ -31,7 +31,10 @@ func (b *Bookinist) AddBook(_ context.Context, book *pb.Book) (*pb.Empty, error)
 
 func main() {
 	srv := Bookinist{}
-	srv.Data = append(srv.Data, pb.Book{Id: 2, Title: "The Go Programming Language"}, pb.Book{Id: 1, Title: "1984"})
+	srv.Data = append(srv.Data,
+		pb.Book{Id: 2, Title: "The Go Programming Language"},
+		pb.Book{Id: 1, Title: "1984"},
+	)
 
 	lis, err := net.Listen("tcp", ":12345")
 	if err != nil {

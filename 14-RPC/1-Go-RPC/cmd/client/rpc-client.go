@@ -8,7 +8,7 @@ import (
 	"go-core-4/14-RPC/1-Go-RPC/pkg/books"
 )
 
-type book struct {
+type book2 struct {
 	ID     int
 	Title  string
 	Author string
@@ -24,7 +24,7 @@ func main() {
 	// получение списка книг, используя тип данных результата из пакета "books"
 	var req = &books.Request{}
 	var data []books.Book
-	client.Call("Server.Books", req, &data)
+	err = client.Call("Server.Books", req, &data)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,12 +32,13 @@ func main() {
 
 	// получение книги по ID, используя локальный тип данных
 	req = &books.Request{ID: 1}
-	var item book
+	var item book2
 	client.Call("Server.Book", req, &item)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("%+v\n", item)
+
 	// неверное имя функции
 	err = client.Call("Server.WrongName", req, &item)
 	if err != nil {
