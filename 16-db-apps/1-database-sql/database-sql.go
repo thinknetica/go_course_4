@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
@@ -8,6 +9,12 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 )
+
+// Использование шаблона "Репозиторий".
+type BooksRepo interface {
+	GetBooks(context.Context) ([]book, error)
+	AddBook(context.Context, book) (int, error)
+}
 
 // Книжка.
 type book struct {
