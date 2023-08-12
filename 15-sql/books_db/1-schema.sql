@@ -59,8 +59,8 @@ CREATE TABLE books_authors (
 CREATE OR REPLACE FUNCTION check_book_year()
   RETURNS TRIGGER AS $$
 BEGIN
-    IF NEW.year < (SELECT (extract(year from current_date) - 10)) AND
-        NEW.year > (SELECT (extract(year from current_date) + 10))
+    IF NEW.year > (SELECT (extract(year from current_date) - 10)) AND
+        NEW.year < (SELECT (extract(year from current_date) + 10))
         THEN RETURN NEW;
         ELSE RAISE EXCEPTION 'Invalid book year'; --RETURN NULL;
     END IF;

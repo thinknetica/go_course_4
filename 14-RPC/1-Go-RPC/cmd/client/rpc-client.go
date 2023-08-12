@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/rpc"
 
-	"go-core-4/14-RPC/1-Go-RPC/pkg/books"
+	"go-core-4/14-rpc/1-go-rpc/pkg/books"
 )
 
 type book2 struct {

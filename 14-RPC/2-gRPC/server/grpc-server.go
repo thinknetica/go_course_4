@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	pb "go-core-4/14-RPC/2-gRPC/books_proto"
+	pb "go-core-4/14-rpc/2-grpc/books_proto"
 )
 
 type Bookinist struct {
