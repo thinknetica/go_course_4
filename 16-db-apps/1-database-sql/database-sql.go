@@ -91,8 +91,8 @@ func books(db *sql.DB) ([]book, error) {
 	rows, err := db.Query(`
 		SELECT id, title, year
 		FROM books
-		WHERE id >= ?`,
-		0,
+		WHERE id >= ? AND id < ?;`,
+		0, 10_000,
 	)
 	if err != nil {
 		return nil, err
@@ -138,7 +138,7 @@ func addBooks(db *sql.DB, books []book) error {
 	defer stmt.Close()
 
 	for _, book := range books {
-		res, err := stmt.Exec(book.Title, book.Year)
+		res, err := stmt.ExecContext(context.TODO(), book.Title, book.Year)
 		if err != nil {
 			return err
 		}

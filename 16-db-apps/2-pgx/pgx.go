@@ -72,11 +72,11 @@ func books(ctx context.Context, db *pgxpool.Pool) ([]book, error) {
 	rows, err := db.Query(ctx, `
 		SELECT id, title, year
 		FRoM books
-		WHERE id >= $1`,
+		WHERE id >= $1 AND id < `,
 		0,
 	)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -112,17 +112,21 @@ func addBooks(ctx context.Context, db *pgxpool.Pool, books []book) error {
 
 	// пакетный запрос
 	var batch = &pgx.Batch{}
+
 	// добавление заданий в пакет
 	for _, book := range books {
 		batch.Queue(`INSERT INTO books(title, year) VALUES ($1, $2)`, book.Title, book.Year)
 	}
+
 	// отправка пакета в БД (может выполняться для транзакции или соединения)
 	res := tx.SendBatch(ctx, batch)
+
 	// обязательная операция закрытия соединения
 	err = res.Close()
 	if err != nil {
 		return err
 	}
+
 	// подтверждение транзакции
 	return tx.Commit(ctx)
 }

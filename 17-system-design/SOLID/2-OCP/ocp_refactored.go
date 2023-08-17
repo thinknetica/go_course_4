@@ -12,9 +12,9 @@ func Avg(nums []int) float64 {
 	return float64(sum / len(nums))
 }
 
-func Max(nums []int) int {
+func Max(nums []int) (int, bool) {
 	if len(nums) == 0 {
-		return 0
+		return 0, false
 	}
 	num := nums[0]
 	for _, n := range nums {
@@ -22,6 +22,6 @@ func Max(nums []int) int {
 			num = n
 		}
 	}
-	return num
+	return num, true
 }
 */

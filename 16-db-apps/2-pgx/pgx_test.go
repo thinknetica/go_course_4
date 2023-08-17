@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -22,7 +21,7 @@ func TestMain(m *testing.M) {
 		log.Fatalf("Unable to connect to database: %v\n", err)
 	}
 	defer testDB.Close()
-	os.Exit(m.Run())
+	m.Run()
 }
 
 func Test_books(t *testing.T) {
