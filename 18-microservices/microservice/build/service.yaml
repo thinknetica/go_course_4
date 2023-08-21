@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microapp-service
+spec:
+  selector:
+    appname: microapp
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

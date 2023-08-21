@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microapp-deployment
+spec:
+  selector:
+    matchLabels:
+      appname: microapp
+  replicas: 2 # количество экземпляров приложения
+  template:
+    metadata:
+      labels:
+        appname: microapp
+    spec:
+      containers:
+      - name: microapp
+        image: dmitriytitov/microapp:latest
+        ports:
+        - containerPort: 8080
