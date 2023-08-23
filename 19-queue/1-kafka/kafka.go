@@ -32,9 +32,10 @@ func New(brokers []string, topic string, groupId string) (*Client, error) {
 	})
 
 	c.Writer = &kafka.Writer{
-		Addr:     kafka.TCP(brokers[0]),
-		Topic:    topic,
-		Balancer: &kafka.LeastBytes{},
+		Addr:                   kafka.TCP(brokers[0]),
+		Topic:                  topic,
+		Balancer:               &kafka.LeastBytes{},
+		AllowAutoTopicCreation: true,
 	}
 
 	return &c, nil
@@ -43,7 +44,7 @@ func New(brokers []string, topic string, groupId string) (*Client, error) {
 func main() {
 	// Инициализация клиента Kafka.
 	kfk, err := New(
-		[]string{"ubuntu-server.northeurope.cloudapp.azure.com:9092"},
+		[]string{"localhost:29092"},
 		"test-topic",
 		"test-consumer-group",
 	)

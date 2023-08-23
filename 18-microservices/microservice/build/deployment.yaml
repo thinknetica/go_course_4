@@ -17,3 +17,5 @@ spec:
         image: dmitriytitov/microapp:latest
         ports:
         - containerPort: 8080
+
+# kubectl port-forward deployment.apps/microapp-deployment 8080:8080 
