@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"time"
 
 	// импорт драйвера
 	"github.com/go-redis/redis/v8"
@@ -20,7 +21,7 @@ type book struct {
 func main() {
 	// подключение к СУБД
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "server.domain:6379",
+		Addr:     "localhost:6379",
 		Password: "", // без пароля
 		DB:       0,  // БД по умолчанию
 	})
@@ -31,20 +32,20 @@ func main() {
 	}
 
 	// выполнение запросов
-	err := updateCache(redisClient, books)
+	err := setBooks(redisClient, books)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	data, err := cache(redisClient, []int{1, 2})
+	data, err := getBooks(redisClient, []int{1, 2})
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(data)
 }
 
-// cache возвращает книги из кэша.
-func cache(client *redis.Client, ids []int) ([]book, error) {
+// getBooks возвращает книги из кэша.
+func getBooks(client *redis.Client, ids []int) ([]book, error) {
 	var books []book
 
 	for _, id := range ids {
@@ -62,8 +63,8 @@ func cache(client *redis.Client, ids []int) ([]book, error) {
 	return books, nil
 }
 
-// updateCache обновляет данные в кэше Redis.
-func updateCache(client *redis.Client, books []book) error {
+// setBooks обновляет данные в кэше Redis.
+func setBooks(client *redis.Client, books []book) error {
 	for _, b := range books {
 		key := "books:" + strconv.Itoa(b.ID)
 
@@ -72,7 +73,7 @@ func updateCache(client *redis.Client, books []book) error {
 			return err
 		}
 
-		err = client.Set(context.Background(), key, string(val), 0).Err()
+		err = client.Set(context.Background(), key, string(val), time.Minute*10).Err()
 		if err != nil {
 			return err
 		}

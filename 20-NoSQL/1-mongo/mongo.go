@@ -22,7 +22,7 @@ type lang struct {
 
 func main() {
 	// подключение к СУБД MongoDB
-	mongoOpts := options.Client().ApplyURI("mongodb://server.domain:27017/")
+	mongoOpts := options.Client().ApplyURI("mongodb://localhost:27017/")
 	client, err := mongo.Connect(context.Background(), mongoOpts)
 	if err != nil {
 		log.Fatal(err)
